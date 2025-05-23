@@ -1,6 +1,8 @@
 from rest_framework import viewsets, permissions
 from .models import Post, UserProfile
 from .serializers import PostSerializer
+#from .tasks import send_post_created_email
+
 
 class IsAuthorOrReadOnly(permissions.BasePermission):
     def has_object_permission(self, request, view, obj):
@@ -20,5 +22,11 @@ class PostViewSet(viewsets.ModelViewSet):
         return Post.objects.filter(author=user_profile)
 
     def perform_create(self, serializer):
-        user_profile = getattr(self.request.user, 'userprofile', None)
-        serializer.save(author=user_profile)
+     user = self.request.user
+     user_profile = getattr(user, 'userprofile', None)  # pour gérer le cas où le profil n'existe pas
+     post = serializer.save(author=user_profile)  # ou `user_profile=user_profile` selon ton modèle
+
+     #if user.email:
+        # Appel de la tâche asynchrone
+       # send_post_created_email.delay(user.email, post.title)
+        

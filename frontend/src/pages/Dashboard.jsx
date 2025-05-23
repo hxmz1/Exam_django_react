@@ -171,9 +171,9 @@ const Dashboard = () => {
                 {post.image && (
                   <img
                     src={
-                      post.image.startsWith("http")
+                      post.image.startsWith("https")
                         ? post.image
-                        : `http://localhost:8000${post.image}`
+                        : `https://localhost:8000${post.image}`
                     }
                     alt={post.title}
                     style={{ maxWidth: "100%", maxHeight: 200, marginTop: 10 }}

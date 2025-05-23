@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = 'http://localhost:8000/api';
+const API_URL = 'https://localhost:8000/api';
 
 export const login = (credentials) => {
   return axios.post(`${API_URL}/token/`, credentials, {
